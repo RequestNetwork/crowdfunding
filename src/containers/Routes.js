@@ -7,7 +7,6 @@ import { Home } from './Home';
 import { Route } from 'react-router-dom';
 import { Onboarding } from './Onboarding';
 import styled from 'styled-components';
-import { MyProjects } from './MyProjects';
 import { FAQ } from './FAQ';
 
 const ContainerBase = styled.div`
@@ -49,17 +48,6 @@ export const Main = ({ requestNetwork }) => (
           <SimpleAppBar />
           <Onboarding {...props} />
         </FormContainer>
-      )}
-    />
-    <Route
-      exact
-      path="/projects"
-      component={props => (
-        <HomeContainer>
-          <AppBar />
-          <MyProjects {...props} />
-          <Footer />
-        </HomeContainer>
       )}
     />
     <Route

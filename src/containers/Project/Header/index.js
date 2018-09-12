@@ -129,7 +129,7 @@ const Column = styled.div`
   align-items: center;
 `;
 
-const BrandLogo = ({ project }) => (
+const BrandLogo = ({ project, editable }) => (
   <ImageUploader
     sizeLimit={1}
     projectId={project.id}
@@ -146,7 +146,7 @@ const BrandLogo = ({ project }) => (
       return (
         <BrandLogoContainer logoUrl={project.logoUrl}>
           <LogoContent>
-            {project.isOwner && (
+            {editable && (
               <Input
                 id="upload-logo-file"
                 accept="image/*"
@@ -155,7 +155,7 @@ const BrandLogo = ({ project }) => (
               />
             )}
             {!project.logoUrl &&
-              project.isOwner && (
+              editable && (
                 <Column htmlFor="upload-logo-file">
                   <Button component="span">
                     <CameraIcon style={{ width: 35, height: 35 }} />
@@ -184,15 +184,15 @@ const ResponsiveProjectDetails = styled(ProjectDetails)`
   grid-gap: unset;
 `;
 
-export const ProjectHeader = ({ project }) => (
+export const ProjectHeader = ({ project, editable = true }) => (
   <ProjectHeaderContainer>
     <Media query="(min-width: 768px)">
       {matches =>
         matches ? (
           <ProjectDetails>
-            <BrandLogo project={project} />
+            <BrandLogo project={project} editable={editable} />
             <ProjectInfoContainer>
-              {project.isOwner && !project.isPublished ? (
+              {editable ? (
                 <Title
                   component={H1}
                   title={project.title}
@@ -207,11 +207,11 @@ export const ProjectHeader = ({ project }) => (
                 <Tab label="About" />
               </Tabs>
             </ProjectInfoContainer>
-            {project.isOwner && <ProjectImageUpload projectId={project.id} />}
+            {editable && <ProjectImageUpload projectId={project.id} />}
           </ProjectDetails>
         ) : (
           <ResponsiveProjectDetails>
-            <BrandLogo project={project} />
+            <BrandLogo project={project} editable={editable} />
             <div>
               <ProjectInfoContainer>
                 <H1 style={{ fontSize: 14 }}>{project.title}</H1>
@@ -232,5 +232,11 @@ export const ProjectHeader = ({ project }) => (
 export const Header = ({ project, ...props }) => (
   <AppBarImage {...props} img={project.projectImageUrl || BackgroundImage}>
     <ProjectHeader project={project} />
+  </AppBarImage>
+);
+
+export const ViewHeader = ({ project, children, ...props }) => (
+  <AppBarImage {...props} img={project.projectImageUrl || BackgroundImage}>
+    <ProjectHeader project={project} editable={false} />
   </AppBarImage>
 );

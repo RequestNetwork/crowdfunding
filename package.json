@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^1.1.0",
+    "@material-ui/core": "^3.0.3",
     "@requestnetwork/request-network.js": "^0.7.7",
     "apollo-boost": "0.1.6",
     "apollo-cache-inmemory": "^1.2.1",

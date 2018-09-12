@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Description } from './Description';
 import { StyledArticle } from './components';
-import { Header } from './Header';
+import { ViewHeader } from './Header';
 import { Loader } from '../../components/Loader';
 import { SideBar } from './SideBar';
 import { RequestInfo } from './SideBar/RequestInfo';
@@ -50,7 +50,7 @@ export class Project extends Component {
     }
     return (
       <Fragment>
-        <Header project={project} />
+        <ViewHeader project={project} />
         <StyledArticle>
           <Description project={project} />
           <SideBar project={project} requestNetwork={requestNetwork}>
