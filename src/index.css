@@ -1,0 +1,13 @@
+body {
+  font-family: 'Poppins', 'Roboto', sans-serif;
+  margin: 0;
+  background: linear-gradient(180deg, #f5f6fa 52.26%, #fefefe 100%);
+  min-height: 100%;
+}
+
+html {
+  width: 100%;
+  background-color: white;
+}
+
+
