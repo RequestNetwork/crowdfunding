@@ -106,7 +106,6 @@ export class Publisher extends Component {
             }/project/published/${txHash}`}
           >
             <Button
-              disabled={!ready}
               variant="raised"
               color="primary"
               fullWidth

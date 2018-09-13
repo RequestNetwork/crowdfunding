@@ -46,14 +46,24 @@ export class Project extends Component {
     const { project, loading, total, raised, requestId } = this.state;
 
     if (loading) {
-      return <Loader />;
+      return (
+        <Fragment>
+          <ViewHeader project={project} />
+          <StyledArticle>
+            <Loader />
+            <SideBar>
+              <div />
+            </SideBar>
+          </StyledArticle>
+        </Fragment>
+      );
     }
     return (
       <Fragment>
         <ViewHeader project={project} />
         <StyledArticle>
           <Description project={project} />
-          <SideBar project={project} requestNetwork={requestNetwork}>
+          <SideBar>
             <RequestInfo total={total} raised={raised} currency="ETH" />
             <Backer requestId={requestId} requestNetwork={requestNetwork} />
           </SideBar>
