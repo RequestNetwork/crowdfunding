@@ -29,7 +29,7 @@ const Error = styled.div`
 
 const BrandLogoContainer = styled(Paper)`
   && {
-    background-image: url(${({ logoUrl }) => logoUrl});
+    background-image: url(${({ img }) => img});
     width: 205px;
     height: 205px;
     background-size: cover;
@@ -138,13 +138,13 @@ const BrandLogo = ({ project, editable }) => (
     {({ handleFileUpload, loading, error, message }) => {
       if (loading)
         return (
-          <BrandLogoContainer logoUrl={project.logoUrl}>
+          <BrandLogoContainer img={project.logoUrl}>
             <Loader />
           </BrandLogoContainer>
         );
 
       return (
-        <BrandLogoContainer logoUrl={project.logoUrl}>
+        <BrandLogoContainer img={project.logoUrl}>
           <LogoContent>
             {editable && (
               <Input
