@@ -14,6 +14,9 @@
 # locked on rinkeby by default
 yarn
 yarn start
+
+# to start main net
+yarn start:main
 ```
 
 ### Build Releases
@@ -21,9 +24,9 @@ yarn start
 
 ```sh
 # lock it to Rinkeby
-REACT_APP_NETWORK=rinkeby  yarn build
+yarn build:rinkeby
 # lock it to Main Net
-REACT_APP_NETWORK=main  yarn build
+yarn build:main
 ```
 
 ## Testing

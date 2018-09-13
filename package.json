@@ -33,7 +33,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:main": "REACT_APP_NETWORK=main yarn start",
     "build": "react-scripts build",
+    "build:rinkeby": "REACT_APP_NETWORK=rinkeby yarn build",
+    "build:main": "REACT_APP_NETWORK=main yarn build",
     "lint": "prettier --list-different 'src/**/*.js'",
     "format": "prettier 'src/**/*.js'",
     "test": "react-scripts test --env=jsdom",
