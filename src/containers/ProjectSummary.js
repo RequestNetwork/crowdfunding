@@ -4,13 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Link } from '../components/Link';
 import { Center } from '../components/Center';
 import { Flex } from '../components/Flex';
 import { H2 } from '../components/H';
 import Media from 'react-media';
+import styled from 'styled-components';
 
 const styles = {
   card: {
@@ -36,7 +35,27 @@ const styles = {
   },
 };
 
-function ProjectCard({ projectId, title, amount, ...props }) {
+const Bold = styled.span`
+  font-weigth: 600;
+`;
+
+export const EmptyAmountSection = () => (
+  <Typography align="center" component="p">
+    Amount to raise to raise <Bold>XX</Bold> ETH
+  </Typography>
+);
+export const AmountSection = ({ amount }) => (
+  <Typography align="center" component="p">
+    Amount to raise to raise {parseInt(amount, 10) / Math.pow(10, 18)} ETH
+  </Typography>
+);
+
+function ProjectCard({
+  component: button,
+  subComponent: amount,
+  title,
+  ...props
+}) {
   const { classes } = props;
 
   return (
@@ -55,43 +74,16 @@ function ProjectCard({ projectId, title, amount, ...props }) {
             >
               <Flex>
                 <H2>{title}</H2>
-                <Typography component="p">
-                  Amount to raise to raise{' '}
-                  {parseInt(amount, 10) / Math.pow(10, 18)} ETH
-                </Typography>
+                {amount}
               </Flex>
-              <Center>
-                <Link to={`/project/${projectId}`}>
-                  <Button
-                    style={{ width: 180 }}
-                    color="primary"
-                    variant="raised"
-                  >
-                    VIEW PROJECT
-                  </Button>
-                </Link>
-              </Center>
+              <Center>{button}</Center>
             </div>
           </Card>
         ) : (
           <Card style={{ marginBottom: '1rem' }} elevation={0}>
             <CardHeader title={title} />
-            <CardContent>
-              <Typography align="center" component="p">
-                Amount to raise to raise{' '}
-                {parseInt(amount, 10) / Math.pow(10, 18)} ETH
-              </Typography>
-            </CardContent>
-            <Link to={`/project/${projectId}`}>
-              <Button
-                fullWidth
-                style={{ borderRadius: 'unset' }}
-                color="primary"
-                variant="raised"
-              >
-                VIEW PROJECT
-              </Button>
-            </Link>
+            <CardContent>{amount}</CardContent>
+            {button}
           </Card>
         )
       }

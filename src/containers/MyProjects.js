@@ -3,27 +3,21 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { H1, H2 } from '../components/H';
 import { Loader } from '../components/Loader';
-import { ProjectSummary } from './ProjectSummary.js';
+import {
+  ProjectSummary,
+  AmountSection,
+  EmptyAmountSection,
+} from './ProjectSummary.js';
 import styled from 'styled-components';
+import { OnboardingLink } from './Home';
+import Button from '@material-ui/core/Button';
+import { Link } from '../components/Link';
 
 // will be used to display users projects
 
-const ProjectList = ({ projects }) => (
-  <Container>
-    <H1 align="center">My Projects</H1>
-    <Div>
-      <ProjectSummary
-        projectId={projects[0].id}
-        title={projects[0].title}
-        amount={projects[0].amount}
-      />
-    </Div>
-  </Container>
-);
-
 const DRAFTS_QUERY = gql`
   query {
-    drafts {
+    project @client {
       title
       id
       amount
@@ -33,31 +27,67 @@ const DRAFTS_QUERY = gql`
 
 const Div = styled.div`
   padding-top: 2rem;
+  width: 768px;
+`;
+
+const Center = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 `;
 
 const UnPublished = () => (
-  <Query fetchPolicy="network-only" query={DRAFTS_QUERY}>
+  <Query query={DRAFTS_QUERY}>
     {({ data, loading }) => {
       if (loading) {
         return <Loader />;
       }
-      const { drafts } = data;
-      if (drafts.length <= 0) {
-        return <H1 align="center">All projects have been published</H1>;
+      const { project } = data;
+      const FILLER = 'xxxxxxxx';
+      if (project.isPublished) {
+        return (
+          <Fragment>
+            <H1 align="center">All projects have been published</H1>
+            <Center>
+              <Div>
+                <ProjectSummary
+                  title={FILLER}
+                  subComponent={<EmptyAmountSection />}
+                  component={
+                    <Button
+                      variant="raised"
+                      color="primary"
+                      component={OnboardingLink}
+                      fullWidth
+                      style={{ height: '3rem' }}
+                    >
+                      Create a new Project
+                    </Button>
+                  }
+                />
+              </Div>
+            </Center>
+          </Fragment>
+        );
       }
       return (
         <Fragment>
-          <H2 align="center">{drafts.length} unpublished projects</H2>
+          <H2 align="center">You have 1 unpublished project</H2>
           <Div>
-            {drafts.map(project => (
-              <ProjectSummary
-                style={{ marginBottom: '1rem' }}
-                key={project.id}
-                projectId={project.id}
-                title={project.title}
-                amount={project.amount}
-              />
-            ))}
+            <ProjectSummary
+              style={{ marginBottom: '1rem' }}
+              key={project.id}
+              title={project.title}
+              subComponent={<AmountSection amount={project.amount} />}
+              component={
+                <Link to={`/project/${project.id}`}>
+                  <Button fullWidth color="primary" variant="raised">
+                    VIEW PROJECT
+                  </Button>
+                </Link>
+              }
+              amount={project.amount}
+            />
           </Div>
         </Fragment>
       );
@@ -94,7 +124,6 @@ export class MyProjects extends Component {
     return (
       <ScrollableDiv>
         <Container>
-          <H1 align="center">Unpublished Projects</H1>
           <UnPublished />
         </Container>
       </ScrollableDiv>

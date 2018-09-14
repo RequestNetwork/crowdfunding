@@ -3,6 +3,7 @@ import AppBar, { SimpleAppBar } from '../components/AppBar';
 import { Footer } from './Footer';
 import { Project as ProjectEdit } from './Project/Edit';
 import { Project as ProjectView } from './Project/View';
+import { MyProjects as ProjectList } from './MyProjects';
 import { Home } from './Home';
 import { Route } from 'react-router-dom';
 import { Onboarding } from './Onboarding';
@@ -68,6 +69,17 @@ export const Main = ({ requestNetwork }) => (
           <ProjectView {...props} requestNetwork={requestNetwork} />
           <Footer />
         </ProjectContainer>
+      )}
+    />
+    <Route
+      exact
+      path="/projects"
+      component={props => (
+        <HomeContainer>
+    <AppBar/ >
+          <ProjectList />
+          <Footer />
+        </HomeContainer>
       )}
     />
     <Route

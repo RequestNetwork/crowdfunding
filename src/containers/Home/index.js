@@ -54,7 +54,7 @@ const ResponsiveColumn = styled(Column)`
   margin: auto;
 `;
 
-const OnboardingLink = props => <Link to="/onboarding/project" {...props} />;
+export const OnboardingLink = props => <Link to="/onboarding/project" {...props} />;
 
 export class Home extends Component {
   render() {
