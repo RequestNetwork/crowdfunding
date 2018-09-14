@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -51,6 +51,7 @@ const Hamburger = ({ style }) => (
 );
 
 const DocumentationLink = props => <Link to="/faq" {...props} />;
+const MyProjectsLink = props => <Link to="/projects" {...props} />;
 
 const Background = styled.div`
   align-self: center;
@@ -81,7 +82,7 @@ class RequestAppBar extends Component {
   state = { drawer: false };
   render() {
     const { drawer } = this.state;
-    const { style, contrast } = this.props;
+    const { style, buttons: Buttons, contrast } = this.props;
     return (
       <AppBar style={style} position="static" elevation={0}>
         <Drawer
@@ -98,9 +99,7 @@ class RequestAppBar extends Component {
             <HomeButton />
             <div onClick={() => this.setState({ drawer: false })}>x</div>
           </SpaceBetween>
-          <Button color="inherit" component={DocumentationLink}>
-            Documentation
-          </Button>
+          <Buttons />
         </Drawer>
         <StyledToolbar>
           <HomeButton />
@@ -121,13 +120,7 @@ class RequestAppBar extends Component {
                     color: contrast ? 'white' : 'inherit',
                   }}
                 >
-                  <Button
-                    color="inherit"
-                    component={DocumentationLink}
-                    style={{ marginRight: '1rem' }}
-                  >
-                    Documentation
-                  </Button>
+                  <Buttons />
                 </div>
               )
             }
@@ -141,7 +134,7 @@ class RequestAppBar extends Component {
 export default props => {
   return (
     <Background>
-      <RequestAppBar {...props} />
+      <RequestAppBar {...props} buttons={NavButtons} />
     </Background>
   );
 };
@@ -152,10 +145,29 @@ export const SimpleAppBar = () => (
   </Center>
 );
 
+const NavButtons = () => (
+  <Fragment>
+    <Button color="inherit" component={MyProjectsLink}>
+      My Projects
+    </Button>
+    <Button
+      color="inherit"
+      component={DocumentationLink}
+      style={{ marginRight: '1rem' }}
+    >
+      Documentation
+    </Button>
+  </Fragment>
+);
+
 export const AppBarImage = ({ img, children, ...props }) => {
   return (
     <BackgroundImage img={img}>
-      <RequestAppBar {...props} style={{ marginTop: '2rem' }} />
+      <RequestAppBar
+        {...props}
+        style={{ marginTop: '2rem' }}
+        buttons={NavButtons}
+      />
       {children}
     </BackgroundImage>
   );
