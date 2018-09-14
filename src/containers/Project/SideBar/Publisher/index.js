@@ -32,6 +32,14 @@ export class Publisher extends Component {
     txHash: '',
     ready: false,
   };
+  getRequest = async hash => {
+    const { requestNetwork } = this.props;
+    const response = await requestNetwork.get({ hash });
+    if (!response.request) {
+      return setTimeout(() => this.getRequest(hash), 1000);
+    }
+    return this.setState({ ready: true });
+  };
 
   handlePublish = (
     requestNetwork,
@@ -57,6 +65,7 @@ export class Publisher extends Component {
       })
       .on('broadcasted', ({ transaction }) => {
         this.setState({ loading: false, txHash: transaction.hash });
+        this.getRequest(transaction.hash);
       })
       .then(res => {
         this.setState({ ready: true });
@@ -110,6 +119,7 @@ export class Publisher extends Component {
             </Button>
           </Clipboard>
           <Button
+            disabled={!ready}
             variant="raised"
             color="primary"
             component={PublishedLink}
