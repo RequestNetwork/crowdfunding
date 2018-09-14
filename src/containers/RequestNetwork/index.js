@@ -36,7 +36,7 @@ const createRequest = (
     JSON.stringify(data),
     undefined, // extensions
     undefined, // extensionsParams
-    {gasPrice: '15000000000'}
+    { gasPrice: '15000000000' }
   );
 
 const payRequest = (requestNetwork, requestId, amounts) =>

@@ -76,7 +76,7 @@ export const Main = ({ requestNetwork }) => (
       path="/projects"
       component={props => (
         <HomeContainer>
-    <AppBar/ >
+          <AppBar />
           <ProjectList />
           <Footer />
         </HomeContainer>

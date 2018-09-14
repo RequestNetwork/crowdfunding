@@ -105,16 +105,11 @@ export class Publisher extends Component {
               window.location.origin
             }/project/published/${txHash}`}
           >
-            <Button
-              variant="raised"
-              color="primary"
-              fullWidth
-            >
+            <Button variant="raised" color="primary" fullWidth>
               COPY URL
             </Button>
           </Clipboard>
           <Button
-            disabled={!ready}
             variant="raised"
             color="primary"
             component={PublishedLink}

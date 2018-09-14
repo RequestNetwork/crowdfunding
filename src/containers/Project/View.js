@@ -11,11 +11,12 @@ export class Project extends Component {
   state = {
     project: {},
     loading: false,
+    error: false,
     total: 42,
     raised: 3.13,
     requestId: '',
   };
-  async getRequest() {
+  getRequest = async () => {
     this.setState({ loading: true });
     const {
       match: {
@@ -23,21 +24,26 @@ export class Project extends Component {
       },
       requestNetwork,
     } = this.props;
-    const {
-      request: {
-        data: { data: project },
-        payee: { expectedAmount, balance },
+
+    try {
+      const {
+        request: {
+          data: { data: project },
+          payee: { expectedAmount, balance },
+          requestId,
+        },
+      } = await requestNetwork.get({ hash: id });
+      this.setState({
+        project: project,
+        loading: false,
+        total: expectedAmount,
+        raised: balance,
         requestId,
-      },
-    } = await requestNetwork.get({ hash: id });
-    this.setState({
-      project: project,
-      loading: false,
-      total: expectedAmount,
-      raised: balance,
-      requestId,
-    });
-  }
+      });
+    } catch (e) {
+      setTimeout(this.getRequest, 1000);
+    }
+  };
   componentDidMount() {
     this.getRequest();
   }
