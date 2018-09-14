@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Center } from '../components/Center';
 import { Flex } from '../components/Flex';
@@ -81,8 +79,6 @@ function ProjectCard({
           </Card>
         ) : (
           <Card style={{ marginBottom: '1rem' }} elevation={0}>
-            <CardHeader title={title} />
-            <CardContent>{amount}</CardContent>
             {button}
           </Card>
         )

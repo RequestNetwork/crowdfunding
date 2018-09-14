@@ -42,9 +42,9 @@ const UnPublished = () => (
       if (loading) {
         return <Loader />;
       }
-      const { project } = data;
+
       const FILLER = 'xxxxxxxx';
-      if (project.isPublished) {
+      if (!data || data.project.isPublished) {
         return (
           <Fragment>
             <H1 align="center">All projects have been published</H1>
@@ -70,6 +70,7 @@ const UnPublished = () => (
           </Fragment>
         );
       }
+      const { project } = data;
       return (
         <Fragment>
           <H2 align="center">You have 1 unpublished project</H2>
