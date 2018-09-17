@@ -34,8 +34,12 @@ export class Publisher extends Component {
   };
   getRequest = async hash => {
     const { requestNetwork } = this.props;
-    const response = await requestNetwork.get({ hash });
-    if (!response.request) {
+    try {
+      const response = await requestNetwork.get({ hash });
+      if (!response.request) {
+        return setTimeout(() => this.getRequest(hash), 1000);
+      }
+    } catch (e) {
       return setTimeout(() => this.getRequest(hash), 1000);
     }
     return this.setState({ ready: true });
