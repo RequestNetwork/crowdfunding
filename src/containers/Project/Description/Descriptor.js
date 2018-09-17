@@ -92,9 +92,10 @@ export class Descriptor extends Component {
 
             {edit && (
               <Formik
-                onSubmit={values =>
-                  updateProject({ variables: { ...values, id: projectId } })
-                }
+                onSubmit={values => {
+                  updateProject({ variables: { ...values, id: projectId } });
+                  this.setState({ edit: false });
+                }}
                 component={DescriptorForm}
                 initialValues={{
                   description: description || '',
