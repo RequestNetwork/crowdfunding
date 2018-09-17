@@ -51,7 +51,7 @@ export class Backer extends Component {
       .on('broadcasted', () =>
         this.setState({ backed: true, metaMaskLoading: false })
       )
-      .catch(e => this.setState({ metaMaskLoading: false }));
+      .catch(() => this.setState({ metaMaskLoading: false }));
   };
 
   render() {

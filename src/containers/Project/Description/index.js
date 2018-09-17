@@ -1,14 +1,10 @@
 import React from 'react';
-import { Query } from 'react-apollo';
 import { Descriptor } from './Descriptor';
 import { StyledColumn } from '../components';
-import { GET_PROJECT } from '../Edit';
 import Button from '@material-ui/core/Button';
 import { AddIcon, EditIcon } from './icons';
 import styled from 'styled-components';
 import { Center } from '../../../components/Center';
-
-import { Loader } from '../../../components/Loader';
 
 const StyledCenter = styled(Center)`
   padding-top: 2rem;
@@ -79,22 +75,13 @@ export const EditSection = ({ description, projectId }) => {
   );
 };
 
-export const Description = ({ project, children }) => (
-  <Query query={GET_PROJECT} variables={{ id: project.id }}>
-    {({ data, loading }) => {
-      if (loading) {
-        return <Loader />;
-      }
-      return (
-        <StyledColumn>
-          <DescriptionContainer>
-            <div
-              dangerouslySetInnerHTML={{ __html: project.description || '' }}
-            />
-          </DescriptionContainer>
-          {children}
-        </StyledColumn>
-      );
-    }}
-  </Query>
-);
+export const Description = ({ project, children }) => {
+  return (
+    <StyledColumn>
+      <DescriptionContainer>
+        <div dangerouslySetInnerHTML={{ __html: project.description || '' }} />
+      </DescriptionContainer>
+      {children}
+    </StyledColumn>
+  );
+};

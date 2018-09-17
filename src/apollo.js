@@ -14,6 +14,7 @@ persistCache({
 
 const resolvers = {
   Mutation: {
+    // eslint-disable-next-line
     updateProject: (_, { id, ...rest }, { cache, getCacheKey }) => {
       const __typename = 'Project';
       const cacheId = getCacheKey({ __typename, id: id });
@@ -31,6 +32,7 @@ const resolvers = {
       return { ...rest, __typename };
     },
     createProject: (
+    // eslint-disable-next-line
       _,
       { paymentAddress, title, amount, category },
       { cache }

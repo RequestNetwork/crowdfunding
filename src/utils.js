@@ -1,4 +1,4 @@
-export const handleUpdate = (cache, isStaff) => {};
+export const handleUpdate = () => null
 
 export function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

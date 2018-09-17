@@ -67,7 +67,7 @@ export class Publisher extends Component {
         this.setState({ loading: false, txHash: transaction.hash });
         this.getRequest(transaction.hash);
       })
-      .then(res => {
+      .then(() => {
         this.setState({ ready: true });
       })
       .catch(err => {
