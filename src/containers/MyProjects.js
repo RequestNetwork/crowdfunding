@@ -39,12 +39,38 @@ const Center = styled.div`
 const UnPublished = () => (
   <Query query={DRAFTS_QUERY}>
     {({ data, loading }) => {
+      const FILLER = 'xxxxxxxx';
       if (loading) {
         return <Loader />;
       }
+      if (!data || !data.project)  {
+        return (
+          <Fragment>
+            <H1 align="center">All projects have been published</H1>
+            <Center>
+              <Div>
+                <ProjectSummary
+                  title={FILLER}
+                  subComponent={<EmptyAmountSection />}
+                  component={
+                    <Button
+                      variant="raised"
+                      color="primary"
+                      component={OnboardingLink}
+                      fullWidth
+                      style={{ height: '3rem' }}
+                    >
+                      Create a new Project
+                    </Button>
+                  }
+                />
+              </Div>
+            </Center>
+          </Fragment>
+        );
+      }
 
-      const FILLER = 'xxxxxxxx';
-      if (!data || data.project.isPublished) {
+      if (data.project.isPublished) {
         return (
           <Fragment>
             <H1 align="center">All projects have been published</H1>
