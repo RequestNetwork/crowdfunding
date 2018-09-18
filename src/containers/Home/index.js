@@ -80,7 +80,7 @@ export class Home extends Component {
                     component={OnboardingLink}
                     style={{ maxWidth: 280, height: '3rem' }}
                   >
-                    START A PROJECT
+                    DEMO
                   </Button>
                 </Headline>
               </Column>
