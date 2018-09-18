@@ -1,6 +1,6 @@
 {
-  "short_name": "Request Crowd",
-  "name": "Request Network Crowd",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",

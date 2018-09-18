@@ -106,7 +106,7 @@ export class Home extends Component {
                   component={OnboardingLink}
                   style={{ width: 180 }}
                 >
-                  START A PROJECT
+                  DEMO
                 </Button>
               </Headline>
             </ResponsiveColumn>
