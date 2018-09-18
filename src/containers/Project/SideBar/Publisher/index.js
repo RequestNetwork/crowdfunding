@@ -2,27 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import { MetaMaskLoader, Loader } from '../../../../components/Loader';
 import { Link } from '../../../../components/Link';
-import Clipboard from 'react-clipboard.js';
 import styled from 'styled-components';
-
-export const DisabledButton = ({ children }) => (
-  <Button
-    variant="raised"
-    disabled
-    color="primary"
-    style={{
-      marginTop: '1rem',
-      marginBottom: '3rem',
-    }}
-  >
-    {children}
-  </Button>
-);
-
-const Flex = styled.div`
-  display: flex;
-  margin-bottom: 1rem;
-`;
 
 export class Publisher extends Component {
   state = {
@@ -30,7 +10,7 @@ export class Publisher extends Component {
     error: false,
     message: '',
     txHash: '',
-    ready: false,
+    finished: false,
   };
   getRequest = async hash => {
     const { requestNetwork } = this.props;
@@ -42,7 +22,7 @@ export class Publisher extends Component {
     } catch (e) {
       return setTimeout(() => this.getRequest(hash), 1000);
     }
-    return this.setState({ ready: true });
+    return this.setState({ finished: true });
   };
 
   handlePublish = (
@@ -57,7 +37,7 @@ export class Publisher extends Component {
       title,
     }
   ) => {
-    this.setState({ loading: true, ready: false });
+    this.setState({ loading: true, finished: false });
 
     requestNetwork
       .create([paymentAddress], [amount], {
@@ -72,7 +52,7 @@ export class Publisher extends Component {
         this.getRequest(transaction.hash);
       })
       .then(() => {
-        this.setState({ ready: true });
+        this.setState({ finished: true });
       })
       .catch(err => {
         return this.setState({
@@ -85,73 +65,26 @@ export class Publisher extends Component {
 
   render() {
     const {
-      ready,
+      finished,
       loading: loadingMetaMask,
       error,
       message,
       txHash,
     } = this.state;
-    const { project, requestNetwork } = this.props;
-    if (loadingMetaMask) {
-      return (
-        <DisabledButton>
-          <MetaMaskLoader />
-        </DisabledButton>
-      );
-    }
-    const PublishedLink = props => (
-      <Link to={`/project/published/${txHash}`} {...props} />
-    );
+    const { project, requestNetwork, button } = this.props;
 
-    if (txHash.length > 0) {
-      return (
-        <Fragment>
-          {!ready && (
-            <Flex>
-              <Loader size={50} style={{ marginRight: '1rem' }} />
-              <div>Please wait while your links are being generated</div>
-            </Flex>
-          )}
-          <Clipboard
-            style={{ all: 'unset' }}
-            data-clipboard-text={`${
-              window.location.origin
-            }/project/published/${txHash}`}
-          >
-            <Button variant="raised" color="primary" fullWidth>
-              COPY URL
-            </Button>
-          </Clipboard>
-          <Button
-            disabled={!ready}
-            variant="raised"
-            color="primary"
-            component={PublishedLink}
-            fullWidth
-            style={{ height: '3rem', marginTop: '1rem' }}
-          >
-            Go to Project
-          </Button>
-        </Fragment>
-      );
-    }
-
-    return (
-      <Fragment>
-        <Button
-          variant="raised"
-          color="primary"
-          disabled={
-            !requestNetwork.currentAccount || requestNetwork.networkMismatch
-          }
-          style={{ marginBottom: '3rem' }}
-          onClick={() => this.handlePublish(requestNetwork, project)}
-        >
-          {!requestNetwork.currentAccount && 'Please Login using MetaMask'}
-          {requestNetwork.currentAccount && 'PUBLISH'}
-        </Button>
-        <div>{error && message}</div>
-      </Fragment>
-    );
+    return this.props.children({
+      ready: !(
+        !requestNetwork.currentAccount || requestNetwork.networkMismatch
+      ),
+      finished: false,
+      message: requestNetwork.currentAccount
+        ? 'PUBLISH'
+        : 'Please Login using MetaMask',
+      error,
+      loading: loadingMetaMask,
+      publish: () => this.handlePublish(requestNetwork, project),
+      txHash: '',
+    });
   }
 }
