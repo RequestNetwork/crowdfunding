@@ -5,7 +5,7 @@ import { Flex } from '../../../components/Flex';
 import { InputCurrency } from '../../../components/Input';
 import { Loader } from '../../../components/Loader';
 import { MetaMaskLoader } from '../../../components/Loader';
-import { DisabledButton } from './Publisher';
+import { DisabledButton } from '../Edit';
 import styled from 'styled-components';
 
 const StyledInputCurrency = styled(InputCurrency)`

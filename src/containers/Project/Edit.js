@@ -5,10 +5,12 @@ import Button from '@material-ui/core/Button';
 import { Description, EditSection } from './Description';
 import { StyledArticle } from './components';
 import { Header } from './Header';
-import { Loader } from '../../components/Loader';
+import { MetaMaskLoader, Loader } from '../../components/Loader';
+import { Link } from '../../components/Link';
 import { SideBar } from './SideBar';
 import { Publisher } from './SideBar/Publisher';
 import Clipboard from 'react-clipboard.js';
+import styled from 'styled-components';
 
 export const GET_PROJECT = gql`
   query project {
@@ -49,9 +51,6 @@ const Flex = styled.div`
 export class Project extends Component {
   render() {
     const { requestNetwork } = this.props;
-    const PublishedLink = props => (
-      <Link to={`/project/published/${txHash}`} {...props} />
-    );
     return (
       <Query query={GET_PROJECT}>
         {({ data, loading }) => {
@@ -76,29 +75,38 @@ export class Project extends Component {
                     requestNetwork={requestNetwork}
                     project={data.project}
                   >
-                    {({ ready, publish, message, txHash, finished, loading, txHash }) => {
-                      if (loading) {
+                    {({
+                      ready,
+                      publish,
+                      message,
+                      finished,
+                      broadcasting,
+                      txHash,
+                      mining,
+                    }) => {
+                      if (broadcasting) {
                         return (
                           <DisabledButton>
                             <MetaMaskLoader />
                           </DisabledButton>
                         );
                       }
-                      if (txHash.length > 0) {
+                      const PublishedLink = props => (
+                        <Link to={`/project/published/${txHash}`} {...props} />
+                      );
+                      if (mining) {
+                        return (
+                          <Flex>
+                            <Loader size={50} style={{ marginRight: '1rem' }} />
+                            <div>
+                              Please wait while your links are being generated
+                            </div>
+                          </Flex>
+                        );
+                      }
+                      if (finished) {
                         return (
                           <Fragment>
-                            {!finished && (
-                              <Flex>
-                                <Loader
-                                  size={50}
-                                  style={{ marginRight: '1rem' }}
-                                />
-                                <div>
-                                  Please wait while your links are being
-                                  generated
-                                </div>
-                              </Flex>
-                            )}
                             <Clipboard
                               style={{ all: 'unset' }}
                               data-clipboard-text={`${

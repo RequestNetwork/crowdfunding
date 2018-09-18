@@ -1,15 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import Button from '@material-ui/core/Button';
-import { MetaMaskLoader, Loader } from '../../../../components/Loader';
-import { Link } from '../../../../components/Link';
-import styled from 'styled-components';
 
 export class Publisher extends Component {
   state = {
-    loading: false,
+    broadcasting: false,
     error: false,
     message: '',
     txHash: '',
+    mining: false,
     finished: false,
   };
   getRequest = async hash => {
@@ -22,7 +19,7 @@ export class Publisher extends Component {
     } catch (e) {
       return setTimeout(() => this.getRequest(hash), 1000);
     }
-    return this.setState({ finished: true });
+    return this.setState({ mining: false, finished: true });
   };
 
   handlePublish = (
@@ -37,7 +34,7 @@ export class Publisher extends Component {
       title,
     }
   ) => {
-    this.setState({ loading: true, finished: false });
+    this.setState({ broadcasting: true });
 
     requestNetwork
       .create([paymentAddress], [amount], {
@@ -48,7 +45,11 @@ export class Publisher extends Component {
         title,
       })
       .on('broadcasted', ({ transaction }) => {
-        this.setState({ loading: false, txHash: transaction.hash });
+        this.setState({
+          mining: true,
+          txHash: transaction.hash,
+          broadcasting: false,
+        });
         this.getRequest(transaction.hash);
       })
       .then(() => {
@@ -57,7 +58,7 @@ export class Publisher extends Component {
       .catch(err => {
         return this.setState({
           error: true,
-          loading: false,
+          broadcasting: false,
           message: err.message.slice(1, -1).toUpperCase(),
         });
       });
@@ -66,25 +67,27 @@ export class Publisher extends Component {
   render() {
     const {
       finished,
-      loading: loadingMetaMask,
+      broadcasting,
       error,
       message,
       txHash,
+      mining,
     } = this.state;
-    const { project, requestNetwork, button } = this.props;
+    const { project, requestNetwork } = this.props;
 
     return this.props.children({
       ready: !(
         !requestNetwork.currentAccount || requestNetwork.networkMismatch
       ),
-      finished: false,
+      finished,
       message: requestNetwork.currentAccount
         ? 'PUBLISH'
         : 'Please Login using MetaMask',
       error,
-      loading: loadingMetaMask,
+      mining,
+      broadcasting,
       publish: () => this.handlePublish(requestNetwork, project),
-      txHash: '',
+      txHash,
     });
   }
 }
