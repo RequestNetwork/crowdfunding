@@ -50,7 +50,9 @@ export default (props: IPropType) => {
       </DisabledButton>
     );
   }
-  const PublishedLink = () => <Link to={`/project/published/${txHash}`} />;
+  const PublishedLink = (rest: any) => (
+    <Link to={`/project/published/${txHash}`} {...rest} />
+  );
   if (mining) {
     return (
       <Flex>
@@ -76,9 +78,9 @@ export default (props: IPropType) => {
           disabled={!finished}
           variant="raised"
           color="primary"
+          style={{ height: '3rem', marginTop: '1rem' }}
           component={PublishedLink}
           fullWidth={true}
-          style={{ height: '3rem', marginTop: '1rem' }}
         >
           Go to Project
         </Button>
