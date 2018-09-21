@@ -8,7 +8,7 @@ import { Header } from './Header';
 import { MetaMaskLoader, Loader } from '../../components/Loader';
 import { Link } from '../../components/Link';
 import { SideBar } from './SideBar';
-import { Publisher } from './SideBar/Publisher';
+import { Publisher } from '../../react-request-network';
 import Clipboard from 'react-clipboard.js';
 import styled from 'styled-components';
 import PublishSection from './SideBar/PublishSection';
@@ -54,11 +54,8 @@ export class Project extends Component {
                 </Description>
                 <SideBar>
                   <Publisher
-                    requestNetwork={requestNetwork}
                     project={data.project}
-                  >
-                    {publisher => <PublishSection {...publisher} />}
-                  </Publisher>
+                    component={PublishSection} />
                 </SideBar>
               </StyledArticle>
             </Fragment>
