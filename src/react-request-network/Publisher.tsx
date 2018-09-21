@@ -2,7 +2,19 @@ import * as React from 'react';
 import { Consumer } from './index';
 
 interface IProps {
-  project: any;
+  project: {
+    amount: string;
+    category: string;
+    description: string;
+    id: string;
+    isOwner: boolean;
+    isPublished: boolean;
+    logoUrl: string;
+    paymentAddress: string;
+    projectImageUrl: string;
+    title: string;
+    txHash: string;
+  };
   requestNetwork: any;
   component: any;
 }
@@ -98,7 +110,6 @@ export class InnerPublisher extends React.Component<IProps> {
     return React.createElement(component, props);
   }
 }
-
 const Publisher = props => (
   <Consumer>
     {requestNetwork => (

@@ -55,7 +55,8 @@ export class Project extends Component {
                 <SideBar>
                   <Publisher
                     project={data.project}
-                    component={PublishSection} />
+                    component={PublishSection}
+                  />
                 </SideBar>
               </StyledArticle>
             </Fragment>
