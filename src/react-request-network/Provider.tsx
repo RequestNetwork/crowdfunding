@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { Provider } from './index'
+import { Provider } from './index';
 import Web3 from 'web3';
 import { createRequest, getRequest } from './utils';
-
-
 
 const getNetwork = networkName => {
   switch (networkName) {
@@ -17,21 +15,27 @@ const getNetwork = networkName => {
 };
 
 interface IWindow extends Window {
-  web3: any;
+  web3: Web3;
 }
 
 declare const window: IWindow;
 
-const INFURA_NODE = {
-  1: 'https://mainnet.infura.io/BQBjfSi5EKSCQQpXebO',
-  4: 'https://rinkeby.infura.io/BQBjfSi5EKSCQQpXebO',
+const ETH_NETWORKS = {
+  1: {
+    url: 'https://mainnet.infura.io/BQBjfSi5EKSCQQpXebO',
+    name: 'main',
+  },
+  4: {
+    url: 'https://rinkeby.infura.io/BQBjfSi5EKSCQQpXebO',
+    name: 'rinkeby',
+  },
 };
 
-const NETWORK_NAME = process.env.REACT_APP_NETWORK;
-const networkId = getNetwork(NETWORK_NAME);
 interface IProps {
   onInit: () => void;
 }
+
+const NETWORK_NAME = process.env.REACT_APP_NETWORK;
 
 export class RequestNetworkProvider extends React.Component<IProps> {
   public state = {
@@ -47,7 +51,7 @@ export class RequestNetworkProvider extends React.Component<IProps> {
     }
   }
 
-  public initRequestProvider(web3, networkId, network) {
+  public initRequestProvider(web3, networkId) {
     import('@requestnetwork/request-network.js')
       .then(RequestNetwork => {
         return this.setState({
@@ -55,7 +59,7 @@ export class RequestNetworkProvider extends React.Component<IProps> {
             web3.currentProvider,
             networkId
           ),
-          currentNetwork: network,
+          currentNetwork: ETH_NETWORKS[networkId].name,
         });
       })
       .catch(e => console.error(e));
@@ -64,14 +68,14 @@ export class RequestNetworkProvider extends React.Component<IProps> {
   public async initWeb3() {
     if (typeof window.web3 !== 'undefined') {
       const web3 = new Web3(window.web3.currentProvider);
-      const network = await web3.eth.net.getNetworkType();
-      this.initRequestProvider(web3, networkId, network);
+      const networkId = await web3.eth.net.getId();
+      this.initRequestProvider(web3, networkId);
     } else {
       const web3 = new Web3(
-        new Web3.providers.HttpProvider(INFURA_NODE[networkId])
+        new Web3.providers.HttpProvider(ETH_NETWORKS[4].url)
       );
-      const network = await web3.eth.net.getNetworkType();
-      this.initRequestProvider(web3, networkId, network);
+      const networkId = await web3.eth.net.getId();
+      this.initRequestProvider(web3, networkId);
     }
   }
 
@@ -127,4 +131,3 @@ export class RequestNetworkProvider extends React.Component<IProps> {
 }
 
 export default RequestNetworkProvider;
-

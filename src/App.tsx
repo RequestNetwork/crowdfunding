@@ -8,7 +8,7 @@ import 'typeface-roboto';
 import { client } from './apollo';
 import { NetworkStatus } from './containers/NetworkStatus';
 import { RequestNetworkProvider as OldRequestNetworkProvider } from './containers/RequestNetwork';
-import RequestNetworkProvider from './react-request-network';
+import RequestNetworkProvider, { Consumer } from './react-request-network';
 import { Main } from './containers/Routes';
 import { theme } from './theme';
 
@@ -28,11 +28,17 @@ class App extends React.Component {
                       <Route
                         path="/project/:id"
                         render={props => (
-                          <NetworkStatus
-                            {...props}
-                            mismatch={requestNetwork.networkMismatch}
-                            metaMaskIsLoggedIn={!!requestNetwork.currentAccount}
-                          />
+                          <Consumer>
+                            {newRequestNetwork => (
+                              <NetworkStatus
+                                {...props}
+                                mismatch={newRequestNetwork.networkMismatch}
+                                metaMaskIsLoggedIn={
+                                  !!newRequestNetwork.currentAccount
+                                }
+                              />
+                            )}
+                          </Consumer>
                         )}
                       />
                       <Main requestNetwork={requestNetwork} />
