@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Provider } from './index';
 import Web3 from 'web3';
-import { createRequest, getRequest } from './utils';
+import { createRequest, getRequest, payRequest } from './utils';
 
 const getNetwork = networkName => {
   switch (networkName) {
@@ -118,6 +118,8 @@ export class RequestNetworkProvider extends React.Component<IProps> {
               currentAccount,
             }),
           get: id => getRequest(requestNetwork, id),
+          pay: (requestId, amounts) =>
+            payRequest(requestNetwork, requestId, amounts),
           isReady: true,
           currentNetwork,
           networkMismatch: !(NETWORK_NAME === currentNetwork),

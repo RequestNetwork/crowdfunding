@@ -5,7 +5,9 @@ import { ViewHeader } from './Header';
 import { Loader } from '../../components/Loader';
 import { SideBar } from './SideBar';
 import { RequestInfo } from './SideBar/RequestInfo';
-import { Backer } from './SideBar/Backer';
+import { Backer as OldBacker } from './SideBar/Backer';
+import { Backer } from '../../react-request-network';
+import BackerSection from './SideBar/BackerSection';
 
 export class Project extends Component {
   state = {
@@ -71,7 +73,7 @@ export class Project extends Component {
           <Description project={project} />
           <SideBar>
             <RequestInfo total={total} raised={raised} currency="ETH" />
-            <Backer requestId={requestId} requestNetwork={requestNetwork} />
+            <Backer requestId={requestId} component={BackerSection} />
           </SideBar>
         </StyledArticle>
       </Fragment>

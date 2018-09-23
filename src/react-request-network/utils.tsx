@@ -20,3 +20,5 @@ export const createRequest = (
 export const getRequest = (requestNetwork, { hash }: { hash: string }) => {
   return requestNetwork.requestCoreService.getRequestByTransactionHash(hash);
 };
+export const payRequest = (requestNetwork, requestId, amounts: [string]) =>
+  requestNetwork.requestEthereumService.paymentAction(requestId, amounts);
