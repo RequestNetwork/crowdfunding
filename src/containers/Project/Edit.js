@@ -8,7 +8,7 @@ import { Header } from './Header';
 import { MetaMaskLoader, Loader } from '../../components/Loader';
 import { Link } from '../../components/Link';
 import { SideBar } from './SideBar';
-import { Publisher } from '../../react-request-network';
+import { Publisher } from '@requestnetwork/react-components';
 import Clipboard from 'react-clipboard.js';
 import styled from 'styled-components';
 import PublishSection from './SideBar/PublishSection';
