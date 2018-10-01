@@ -8,7 +8,9 @@ import 'typeface-roboto';
 import { client } from './apollo';
 import { NetworkStatus } from './containers/NetworkStatus';
 import { RequestNetworkProvider as OldRequestNetworkProvider } from './containers/RequestNetwork';
-import RequestNetworkProvider, { Consumer } from '@requestnetwork/react-components';
+import RequestNetworkProvider, {
+  Consumer,
+} from '@requestnetwork/react-components';
 import { Main } from './containers/Routes';
 import { theme } from './theme';
 
@@ -17,37 +19,30 @@ class App extends React.Component {
     return (
       <MuiThemeProvider theme={theme}>
         <RequestNetworkProvider onInit={() => console.log('new library')}>
-          <OldRequestNetworkProvider
-            onInit={() => console.log('Request Library has initialized!')}
-          >
-            {requestNetwork => {
-              return (
-                <Router>
-                  <ApolloProvider client={client}>
-                    <div>
-                      <Route
-                        path="/project/:id"
-                        render={props => (
-                          <Consumer>
-                            {newRequestNetwork => (
-                              <NetworkStatus
-                                {...props}
-                                mismatch={newRequestNetwork.networkMismatch}
-                                metaMaskIsLoggedIn={
-                                  !!newRequestNetwork.currentAccount
-                                }
-                              />
-                            )}
-                          </Consumer>
-                        )}
-                      />
-                      <Main requestNetwork={requestNetwork} />
-                    </div>
-                  </ApolloProvider>
-                </Router>
-              );
-            }}
-          </OldRequestNetworkProvider>
+          <Router>
+            <ApolloProvider client={client}>
+              <div>
+                <Route
+                  path="/project/:id"
+                  render={props => (
+                    <Consumer>
+                      {newRequestNetwork => (
+                        <NetworkStatus
+                          {...props}
+                          mismatch={newRequestNetwork.networkMismatch}
+                          metaMaskIsLoggedIn={
+                            !!newRequestNetwork.currentAccount
+                          }
+                        />
+                      )}
+                    </Consumer>
+                  )}
+                />
+                <Main />
+              </div>
+            </ApolloProvider>
+          </Router>
+          );
         </RequestNetworkProvider>
       </MuiThemeProvider>
     );

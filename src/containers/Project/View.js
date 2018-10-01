@@ -50,8 +50,18 @@ export class Project extends Component {
     this.getRequest();
   }
   render() {
-    const { requestNetwork } = this.props;
-    const { project, loading, total, raised, requestId } = this.state;
+    const {
+      project: userProject,
+      loading,
+      total,
+      raised,
+      requestId,
+    } = this.state;
+    const projectTemplate = {
+      description: '',
+      projectImageUrl: '',
+    };
+    const project = { ...projectTemplate, ...userProject };
 
     if (loading) {
       return (
