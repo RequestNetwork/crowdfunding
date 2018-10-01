@@ -5,7 +5,6 @@ import { ViewHeader } from './Header';
 import { Loader } from '../../components/Loader';
 import { SideBar } from './SideBar';
 import { RequestInfo } from './SideBar/RequestInfo';
-import { Backer as OldBacker } from './SideBar/Backer';
 import { Backer } from '@requestnetwork/react-components';
 import BackerSection from './SideBar/BackerSection';
 
