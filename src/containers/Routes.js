@@ -3,6 +3,7 @@ import AppBar, { SimpleAppBar } from '../components/AppBar';
 import { Footer } from './Footer';
 import { Project as ProjectEdit } from './Project/Edit';
 import { Project as ProjectView } from './Project/View';
+import { Consumer } from '@requestnetwork/react-components';
 import { MyProjects as ProjectList } from './MyProjects';
 import { Home } from './Home';
 import { Route } from 'react-router-dom';
@@ -40,7 +41,7 @@ const ProjectContainer = styled(ContainerBase)`
   }
 `;
 
-export const Main = ({ requestNetwork }) => (
+export const Main = () => (
   <Fragment>
     <Route
       path="/onboarding/*"
@@ -56,7 +57,7 @@ export const Main = ({ requestNetwork }) => (
       path="/project/:id"
       component={props => (
         <ProjectContainer>
-          <ProjectEdit {...props} requestNetwork={requestNetwork} />
+          <ProjectEdit {...props} />
           <Footer />
         </ProjectContainer>
       )}
@@ -66,7 +67,11 @@ export const Main = ({ requestNetwork }) => (
       path="/project/published/:id"
       component={props => (
         <ProjectContainer>
-          <ProjectView {...props} requestNetwork={requestNetwork} />
+          <Consumer>
+            {requestNetwork => (
+              <ProjectView {...props} requestNetwork={requestNetwork} />
+            )}
+          </Consumer>
           <Footer />
         </ProjectContainer>
       )}

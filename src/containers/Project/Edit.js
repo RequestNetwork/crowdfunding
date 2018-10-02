@@ -32,7 +32,6 @@ export const GET_PROJECT = gql`
 `;
 export class Project extends Component {
   render() {
-    const { requestNetwork } = this.props;
     return (
       <Query query={GET_PROJECT}>
         {({ data, loading }) => {
