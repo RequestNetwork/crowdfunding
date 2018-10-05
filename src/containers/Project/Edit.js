@@ -1,16 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Button from '@material-ui/core/Button';
 import { Description, EditSection } from './Description';
 import { StyledArticle } from './components';
 import { Header } from './Header';
-import { MetaMaskLoader, Loader } from '../../components/Loader';
-import { Link } from '../../components/Link';
+import { Loader } from '../../components/Loader';
 import { SideBar } from './SideBar';
-import { Publisher } from '@requestnetwork/react-components';
-import Clipboard from 'react-clipboard.js';
-import styled from 'styled-components';
+import { Publisher } from '@requestnetwork/crowdfunding-react-components';
 import PublishSection from './SideBar/PublishSection';
 
 export const GET_PROJECT = gql`

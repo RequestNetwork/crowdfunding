@@ -5,7 +5,8 @@
   "dependencies": {
     "@material-ui/core": "3.1.0",
     "@requestnetwork/request-network.js": "^0.7.7",
-    "@requestnetwork/react-components":"^0.2.0",
+    "@requestnetwork/react-components":"^0.3.0",
+    "@requestnetwork/crowdfunding-react-components":"^0.1.0",
     "@types/graphql": "^14.0.0",
     "@types/react-router-dom": "^4.3.1",
     "apollo-boost": "0.1.6",

@@ -51,9 +51,9 @@ interface IProps {
   isReady: boolean;
   disabled: boolean;
   metaMaskLoading: boolean;
-  pay: (values: any) => void;
   metaMaskDisabled: boolean;
   backed: boolean;
+  pay(amount:number);
 }
 export default class BackerSection extends React.Component<IProps> {
   public render() {
@@ -95,7 +95,7 @@ export default class BackerSection extends React.Component<IProps> {
       <React.Fragment>
         <Formik
           validationSchema={BackerSchema}
-          onSubmit={values => pay(values)}
+          onSubmit={values => pay(values.amount)}
           initialValues={initialValues}
           render={props => (
             <BackerForm {...props}>

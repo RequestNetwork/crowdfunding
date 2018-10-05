@@ -7,7 +7,6 @@ import 'typeface-poppins';
 import 'typeface-roboto';
 import { client } from './apollo';
 import { NetworkStatus } from './containers/NetworkStatus';
-import { RequestNetworkProvider as OldRequestNetworkProvider } from './containers/RequestNetwork';
 import RequestNetworkProvider, {
   Consumer,
 } from '@requestnetwork/react-components';
